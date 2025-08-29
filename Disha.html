@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You are the best girlfriend because</title>
+  <br />
+  <style>
+    :root {
+      --bg: #fff7fb;
+      --text: #2b2b2b;
+      --accent: #ff4d6d;
+      --btn: #ffe3ec;
+      --btn-text: #7a1f33;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      background: radial-gradient(1200px 1200px at 50% -200px, #ffe6ee 0%, var(--bg) 35%, #ffffff 100%);
+      color: var(--text);
+    }
+    .wrap {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+    .card {
+      text-align: center;
+      max-width: 720px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 2rem 1.5rem 2.25rem;
+      border: 1px solid #f7d6e0;
+    }
+    .heart {
+      font-size: 64px;
+      line-height: 1;
+      margin: 0 0 0.25rem 0;
+      filter: drop-shadow(0 6px 12px rgba(255,77,109,0.25));
+    }
+    h1 {
+      margin: 0.25rem 0 1rem;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+    }
+    .reason {
+      font-size: clamp(1.15rem, 2.5vw, 1.6rem);
+      margin: 1rem auto 1.5rem;
+      font-weight: 600;
+      color: #3d3d3d;
+      min-height: 3.6em; /* keep space steady */
+      line-height: 1.4;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    button {
+      appearance: none;
+      border: 2px solid var(--accent);
+      background: var(--btn);
+      color: var(--btn-text);
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.8rem 1.2rem;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+    button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,77,109,0.25); }
+    button:active { transform: translateY(0); box-shadow: none; }
+
+    .index {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* simple fade */
+    .fade-enter { opacity: 0; transform: translateY(6px); }
+    .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 240ms ease, transform 240ms ease; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-live="polite">
+      <div class="heart" aria-hidden="true">❤️</div>
+      <div id="reason" class="reason">you make every ordinary day feel extraordinary.</div>
+      <div class="controls">
+        <button id="prev" aria-label="Previous reason">⟵ previous</button>
+        <button id="next" aria-label="More reasons">more reasons ⟶</button>
+      </div>
+      <p class="index" id="index">1 / 100</p>
+    </main>
+  </div>
+
+  <script>
+    const reasons = [
+      "you make every ordinary day feel extraordinary.",
+      "your smile lights up any room we walk into.",
+      "you listen to me with your whole heart.",
+      "you cheer for my dreams like they’re your own.",
+      "you give the warmest, safest hugs.",
+      "your laugh is my favorite soundtrack.",
+      "you’re honest, kind, and fiercely loyal.",
+      "you make tough days feel manageable.",
+      "you notice the little things that matter.",
+      "you challenge me to grow in the best ways.",
+      "you’re beautifully yourself, always.",
+      "you remember the details no one else would.",
+      "you make food taste better just by being there.",
+      "you believe in us even on hard days.",
+      "you’re brave enough to be vulnerable.",
+      "you turn chaos into calm just by holding my hand.",
+      "you’re my favorite person to share silence with.",
+      "you’re thoughtful without making a show of it.",
+      "you find magic in everyday moments.",
+      "you care deeply for the people you love.",
+      "you’re witty and effortlessly funny.",
+      "you make me feel seen and understood.",
+      "you inspire me to be kinder.",
+      "you’re my safe place.",
+      "you make home feel like a person.",
+      "you’re patient when I’m learning.",
+      "you’re spontaneous in the best ways.",
+      "you turn simple walks into adventures.",
+      "you’re as beautiful inside as you are outside.",
+      "you celebrate my wins and comfort my losses.",
+      "you love thoughtfully and intentionally.",
+      "you make everything we do more fun.",
+      "you’re resilient and stronger than you know.",
+      "you’re generous with your time and heart.",
+      "you’re curious about the world.",
+      "you make me laugh when I need it most.",
+      "you encourage me to rest and recharge.",
+      "you keep me grounded and dreaming at once.",
+      "you’re my favorite hello and hardest goodbye.",
+      "you’re a great listener and an even better friend.",
+      "you handle challenges with grace.",
+      "you’re creative and full of ideas.",
+      "you make me proud every single day.",
+      "you’ve got a heart of gold.",
+      "you’re kind to strangers and animals.",
+      "you’re my teammate in everything.",
+      "you make rainy days cozy.",
+      "you text me the exact memes I needed.",
+      "you never give up on what matters.",
+      "you smell like comfort and sunshine.",
+      "you laugh at my terrible jokes.",
+      "you keep our promises alive.",
+      "you dance in the kitchen with me.",
+      "you’re beautifully confident and humble.",
+      "you bring out the best version of me.",
+      "you dream big and work hard.",
+      "you make our space feel like a sanctuary.",
+      "you care about your growth and ours.",
+      "you look at me like I’m the only one in the room.",
+      "you share your snacks (even the good ones).",
+      "you make long drives feel short.",
+      "you’re my calm in every storm.",
+      "you’re thoughtful on random Tuesdays, not just holidays.",
+      "you make traditions feel special.",
+      "you’re gentle with my worries.",
+      "you’re the prettiest person I know inside out.",
+      "you forgive and grow with me.",
+      "you cheer me up without trying.",
+      "you turn houses into homes.",
+      "you’re brave, even when you’re scared.",
+      "you keep us laughing.",
+      "you ask great questions and really care about the answers.",
+      "you’re dependable—I can count on you.",
+      "you radiate warmth wherever you go.",
+      "you make me feel lucky every day.",
+      "you’re stunning in sweatpants and in dress-up.",
+      "you never stop learning.",
+      "you share your world with me.",
+      "you make cuddles an art form.",
+      "you say my name like it’s home.",
+      "you’re my favorite plot twist.",
+      "you choose love on purpose.",
+      "you’re sincere and straightforward.",
+      "you surprise me in the best ways.",
+      "you make celebrations sparkle.",
+      "you’re fearless about being yourself.",
+      "you’re my lucky charm.",
+      "you’re supportive of my passions.",
+      "you’re gentle with your own heart, too.",
+      "you’re sunshine on a cloudy day.",
+      "you make coffee taste better.",
+      "you turn plans into memories.",
+      "you’re my favorite person to grow old with.",
+      "you make me excited for tomorrow.",
+      "you’ve got the cutest quirks.",
+      "you are simply unforgettable.",
+      "you’re my adventure and my peace.",
+      "you’re the love I hoped for.",
+      "you make every goodbye worth the next hello.",
+      "you choose kindness, always."
+    ];
+
+    // Ensure exactly 100 reasons; pad if needed (safety for future edits)
+    while (reasons.length < 100) reasons.push("you are loved more than you know.");
+
+    let i = 0;
+    const reasonEl = document.getElementById('reason');
+    const indexEl = document.getElementById('index');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+
+    function updateReason(dir = 1) {
+      i = (i + dir + reasons.length) % reasons.length;
+      // fade animation
+      reasonEl.classList.remove('fade-enter', 'fade-enter-active');
+      void reasonEl.offsetWidth; // reflow
+      reasonEl.classList.add('fade-enter');
+      requestAnimationFrame(() => requestAnimationFrame(() => reasonEl.classList.add('fade-enter-active')));
+      reasonEl.textContent = `You are the best girlfriend because ${reasons[i]}`;
+      indexEl.textContent = `${i+1} / ${reasons.length}`;
+    }
+
+    prevBtn.addEventListener('click', () => updateReason(-1));
+    nextBtn.addEventListener('click', () => updateReason(1));
+
+    // Also cycle with keyboard arrows and space/enter
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { updateReason(1); }
+      if (e.key === 'ArrowLeft') { updateReason(-1); }
+    });
+
+    // Initialize text correctly on load
+    reasonEl.textContent = `You are the best girlfriend because ${reasons[0]}`;
+  </script>
+</body>
+</html>
